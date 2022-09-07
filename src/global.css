@@ -31,5 +31,9 @@ body, button, input {
   --gray-100: #F2F2F2;
 
   --danger: #E25858;
-
 }
+
+:focus {
+  outline: transparent;
+}
+

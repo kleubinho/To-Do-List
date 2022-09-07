@@ -1,0 +1,30 @@
+.cardTask {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background-color: var(--gray-500);
+    padding: 16px;
+    border-radius: 8px;
+}
+
+input[type=checkbox]{
+    background-color: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 30px;
+}
+
+.cardTask p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--gray-100);
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.trash {
+    cursor: pointer;
+    color: var(--gray-300);
+    height: 20px;
+}
