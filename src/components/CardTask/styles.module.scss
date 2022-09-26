@@ -1,0 +1,37 @@
+.cardTask {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: var(--gray-500);
+  padding: 16px;
+  border-radius: 8px;
+
+  input[type="checkbox"] {
+    background-color: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 30px;
+  }
+
+  .nameTask {
+    margin-top: 0;
+    font-size: 14px;
+    color: var(--gray-100);
+    font-weight: 400;
+    line-height: 140%;
+    width: auto;
+  }
+
+  .trash {
+    cursor: pointer;
+    color: var(--gray-300);
+    height: 20px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      color: #cc0000;
+    }
+  }
+}
