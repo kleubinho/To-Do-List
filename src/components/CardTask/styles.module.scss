@@ -10,13 +10,37 @@
   border: 1px solid var(--gray-400);
 
   input[type="checkbox"] {
-    background-color: none;
+    appearance: none;
+    display: flex;
     height: 20px;
     width: 20px;
-    border-radius: 30px;
+    border-radius: 70px;
+    border: 2px solid var(--blue);
+  }
+  input[type="checkbox"]:checked {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--purple-dark);
+    border: none;
+  }
+  input[type="checkbox"]:checked::before {
+    content: "✓";
+    font-size: 0.6rem;
+    color: white;
   }
 
   .nameTask {
+    margin-top: 0;
+    font-size: 14px;
+    color: var(--gray-100);
+    font-weight: 400;
+    line-height: 140%;
+    width: auto;
+
+  }
+  .taskDone{
+    text-decoration: line-through;
     margin-top: 0;
     font-size: 14px;
     color: var(--gray-100);
@@ -37,6 +61,7 @@
   }
 }
 
-.cardTask + .cardTask{
+.cardTask + .cardTask {
   margin-top: 10px;
 }
+

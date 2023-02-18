@@ -1,11 +1,11 @@
 import { Trash } from "phosphor-react";
-import { useState } from "react";
 import styles from "./styles.module.scss";
+
 
 
 export const CardTask = ({ task, onDeleteTask, updateTaskStatus }: any) => {
   function handleDeleteTask() {
-    onDeleteTask(task.nameTask);
+    onDeleteTask(task.id);
   }
 
   function handleTaskCheck(){
@@ -20,7 +20,7 @@ export const CardTask = ({ task, onDeleteTask, updateTaskStatus }: any) => {
         type={"checkbox"}
         onChange={handleTaskCheck}
       />
-      <p className={styles.nameTask}>{task.nameTask}</p>
+      <p className={task.taskDone ? styles.taskDone : styles.nameTask}>{task.nameTask}</p>
       <Trash onClick={handleDeleteTask} className={styles.trash} size={32} />
     </div>
   );

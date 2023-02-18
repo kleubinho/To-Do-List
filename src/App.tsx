@@ -5,13 +5,19 @@ import { Header } from "./components/Header";
 import ClipBoard from "./assets/Clipboard.svg";
 import { CardTask } from "./components/CardTask";
 import { useState } from "react";
-
+import { TCardsTask } from "./types/cardTask.t";
+import toast, { Toaster } from 'react-hot-toast';
 export function App() {
   const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<TCardsTask[]>([]);
 
-  
+
   function handleAddTask() {
+
+    if(task === '') {
+      return
+    }
+
     let newTask = {
       id: uuidv4(),
       nameTask: task,
@@ -19,26 +25,28 @@ export function App() {
     };
 
     setTasks((prevState: any) => [...prevState, newTask]);
+    setTask("")
+
   }
 
   function updateTaskStatus(id: string) {
     const updatedTasks = tasks.map((task) => {
       if (task.id === id) {
-        task.taskDone = !task.taskDone
+        task.taskDone = !task.taskDone;
       }
+      return task;
+    });
 
-      return task
-    })
-
-    setTasks(updatedTasks)
+    setTasks(updatedTasks);
   }
-  
 
-  function onDeleteTask(taskToDelete: string) {
+  const taskCompleted = tasks.filter((task) => task.taskDone === true).length;
+
+  function onDeleteTask(idTask: string) {
     // Imutabilidade -> as variáveis nÃo sofrem mutação, nós criamos um novo valor (um novo espaço na memoria)
     const tasksWithoutDeleteOne = tasks.filter((task) => {
-      console.log(task.nameTask !== taskToDelete);
-      return task.nameTask !== taskToDelete; //eu quero filtrar para manter na lista apenas os comentários que forem diferentes do comentario que eu quero deletar
+      console.log(task.id !== idTask);
+      return task.id !== idTask; //eu quero filtrar para manter na lista apenas os comentários que forem diferentes do comentario que eu quero deletar
     });
 
     setTasks(tasksWithoutDeleteOne);
@@ -48,12 +56,15 @@ export function App() {
 
   return (
     <div className={styles.app}>
+      <Toaster />
       <Header />
       <div className={styles.createTask}>
         <input
+          value={task}
           onChange={(e) => setTask(e.target.value)}
           type="text"
           placeholder="Adicione uma nova tarefa"
+          required
         />
 
         <button onClick={handleAddTask}>
@@ -70,7 +81,9 @@ export function App() {
           </p>
 
           <p>
-            <span>0 de {tasks.length}</span>
+            <span>
+              {taskCompleted} de {tasks.length}
+            </span>
             Concluídas
           </p>
         </header>
