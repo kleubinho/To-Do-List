@@ -3,21 +3,34 @@ import { v4 as uuidv4 } from "uuid";
 import { PlusCircle } from "phosphor-react";
 import { Header } from "./components/Header";
 import ClipBoard from "./assets/Clipboard.svg";
-import { CardProps, CardTask } from "./components/CardTask";
+import { CardTask } from "./components/CardTask";
 import { useState } from "react";
 
 export function App() {
   const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState<CardProps[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
 
-  let newTask = {
-    id: uuidv4(),
-    nameTask: task,
-    taskDone: false,
-  };
-
+  
   function handleAddTask() {
+    let newTask = {
+      id: uuidv4(),
+      nameTask: task,
+      taskDone: false,
+    };
+
     setTasks((prevState: any) => [...prevState, newTask]);
+  }
+
+  function updateTaskStatus(id: string) {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        task.taskDone = !task.taskDone
+      }
+
+      return task
+    })
+
+    setTasks(updatedTasks)
   }
   
 
@@ -65,13 +78,12 @@ export function App() {
         <section className={styles.posts}>
           {tasks.length ? (
             <>
-              {tasks.map((task: CardProps, index) => (
+              {tasks.map((task, index) => (
                 <CardTask
+                  key={task.id}
                   task={task}
-                  key={index}
-                  nameTask={task.nameTask}
                   onDeleteTask={onDeleteTask}
-                  tasks={tasks}
+                  updateTaskStatus={updateTaskStatus}
                 />
               ))}
             </>
