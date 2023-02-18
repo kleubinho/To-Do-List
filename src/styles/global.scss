@@ -9,7 +9,7 @@ body, html {
 }
 
 body, button, input {
-  
+    border: none;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased; /* Para deixar as fontes mais finas e detelhadas quando é uma fonte fora do sistema */

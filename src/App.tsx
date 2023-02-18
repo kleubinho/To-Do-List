@@ -1,4 +1,5 @@
 import styles from "./styles.module.scss";
+import { v4 as uuidv4 } from "uuid";
 import { PlusCircle } from "phosphor-react";
 import { Header } from "./components/Header";
 import ClipBoard from "./assets/Clipboard.svg";
@@ -9,13 +10,29 @@ export function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState<CardProps[]>([]);
 
-  function handleAddTask() {
-    const newTask = {
-      nameTask: task,
-    };
+  let newTask = {
+    id: uuidv4(),
+    nameTask: task,
+    taskDone: false,
+  };
 
+  function handleAddTask() {
     setTasks((prevState: any) => [...prevState, newTask]);
   }
+  
+
+  function onDeleteTask(taskToDelete: string) {
+    // Imutabilidade -> as variáveis nÃo sofrem mutação, nós criamos um novo valor (um novo espaço na memoria)
+    const tasksWithoutDeleteOne = tasks.filter((task) => {
+      console.log(task.nameTask !== taskToDelete);
+      return task.nameTask !== taskToDelete; //eu quero filtrar para manter na lista apenas os comentários que forem diferentes do comentario que eu quero deletar
+    });
+
+    setTasks(tasksWithoutDeleteOne);
+  }
+
+  console.log(tasks);
+
   return (
     <div className={styles.app}>
       <Header />
@@ -36,20 +53,26 @@ export function App() {
         <header>
           <p>
             Tarefas criadas
-            <span>0</span>
+            <span>{tasks.length}</span>
           </p>
 
           <p>
+            <span>0 de {tasks.length}</span>
             Concluídas
-            <span>0</span>
           </p>
         </header>
 
         <section className={styles.posts}>
           {tasks.length ? (
             <>
-              {tasks.map((student: any) => (
-                <CardTask task={student.nameTask} />
+              {tasks.map((task: CardProps, index) => (
+                <CardTask
+                  task={task}
+                  key={index}
+                  nameTask={task.nameTask}
+                  onDeleteTask={onDeleteTask}
+                  tasks={tasks}
+                />
               ))}
             </>
           ) : (
